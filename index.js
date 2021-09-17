@@ -1,11 +1,16 @@
 
-const fs = require('fs');
+
+
+
 const { Client, Intents } = require('discord.js');
-const { token } = "OODg4MDM4NjExNzgwNTA5NzE2.YUM4aA.443vX1OOfX0ktpITBGsfvNMWO_Y"
-
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-
+const { token } = require('./config.json');
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
+client.once('ready', () => {
+	console.log('Ready!');
+});
+
+client.login(token);
 
 client.on('interactionCreate', async interaction => { //listens for commands
 	if (!interaction.isCommand()) return;								//if not a command, then pass
@@ -16,8 +21,8 @@ client.on('interactionCreate', async interaction => { //listens for commands
 				new MessageButton()														//add button as component
 					.setCustomId('primary')											//to check for
 					.setLabel('Primary')												//button's label (UI)
-					.setStyle('PRIMARY'),												//button's style (UI)
-					.setDisabled(true);													//is button disabled
+					.setStyle('PRIMARY')												//button's style (UI)
+					.setDisabled(true)												//is button disabled
 			);
 		const row2 = new MessageActionRow()											//define new action row
 			.addComponents(																				//add components to the action row
@@ -39,7 +44,6 @@ client.on('interactionCreate', async interaction => { //listens for commands
 						},
 					]),
 			);
-			)
 
 		const embed = new MessageEmbed()									//define a new embed
 			.setColor('#0099ff')														//set embed colour
@@ -49,7 +53,6 @@ client.on('interactionCreate', async interaction => { //listens for commands
 
 		await interaction.reply({ content: 'Pong!', ephemeral: true, embeds: [embed], components: [row,row2] });						//reply to command with text "pong!", the embed, and the action row, under components
 	}
-});
 });
 
 client.on('interactionCtreate', interaction => {
