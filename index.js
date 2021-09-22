@@ -6,16 +6,11 @@ const { Client, Intents } = require('discord.js');
 const { token } = require('./config.json');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
+client.login(token);
 client.once('ready', () => {
 	console.log('Ready!');
-});
-
-client.login(token);
-
-client.on('interactionCreate', async interaction => { //listens for commands
-	if (!interaction.isCommand()) return;								//if not a command, then pass
-
-	if (interaction.commandName === 'ping') {						//if command is !ping
+	if (client.isReady()) {console.log('logged in')  
+		const channel = guild.channels.cache.get('<id>')
 		const row = new MessageActionRow()								//define new action row
 			.addComponents(																	//add components to action row
 				new MessageButton()														//add button as component
@@ -50,12 +45,7 @@ client.on('interactionCreate', async interaction => { //listens for commands
 			.setTitle('Some title')													//set embed title
 			.setURL('https://discord.js.org')								//set URL for title
 			.setDescription('Some description here');				//set description
-
-		await interaction.reply({ content: 'Pong!', ephemeral: true, embeds: [embed], components: [row,row2] });						//reply to command with text "pong!", the embed, and the action row, under components
+		channel.send({ content: "test", ephemeral = true, embeds = [embed], components = [row,row2]
 	}
+	
 });
-
-client.on('interactionCtreate', interaction => {
-	if (!interaction.isbutton())  return;
-	console.log(interaction)
-})
